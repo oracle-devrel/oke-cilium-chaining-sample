@@ -1,0 +1,23 @@
+# Copyright (c) 2026, Oracle and/or its affiliates. All rights reserved.
+# Author: Ulaganathan N
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-gateway-to-web
+  namespace: gateway-demo
+spec:
+  endpointSelector:
+    matchLabels:
+      app: web
+  ingress:
+    - fromEntities:
+        - ingress
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+          rules:
+            http:
+              - method: GET
+                path: "/"

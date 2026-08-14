@@ -1,0 +1,20 @@
+# Copyright (c) 2026, Oracle and/or its affiliates. All rights reserved.
+# Author: Ulaganathan N
+
+.DS_Store
+._*
+.$*
+.idea/
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+terraform.tfstate.d/
+crash.log
+crash.*.log
+tfplan
+*.tfplan
+*.tfvars
+!*.tfvars.example
+generated/
+validation-results/
+.helm/

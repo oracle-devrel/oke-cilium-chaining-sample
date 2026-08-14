@@ -1,0 +1,30 @@
+Copyright (c) 2026 Oracle and/or its affiliates.
+
+THIRD-PARTY DEPENDENCY INVENTORY
+
+This repository does not vendor or redistribute third-party source code,
+provider binaries, Helm charts, command-line tools, or container images. The
+sample downloads or invokes the external components listed below at deployment
+or validation time. Each component remains subject to its own license and
+distribution terms.
+
+Runtime and provisioning dependencies referenced by the sample include:
+
+- Cilium and the Cilium Helm chart: https://github.com/cilium/cilium
+  Cilium is licensed under the Apache License, Version 2.0. Copyright and
+  authorship are held by the Authors of Cilium. The upstream license text is
+  reproduced in CILIUM_LICENSE.txt. The upstream project does not publish a
+  standalone NOTICE file at the repository root; its authorship record is at
+  https://github.com/cilium/cilium/blob/v1.18.11/AUTHORS.
+- HashiCorp Terraform: https://github.com/hashicorp/terraform
+- Terraform Provider for OCI: https://github.com/oracle/terraform-provider-oci
+- Terraform Helm Provider: https://github.com/hashicorp/terraform-provider-helm
+- Terraform Local Provider: https://github.com/hashicorp/terraform-provider-local
+- Kubernetes command-line tools and test images: https://github.com/kubernetes/kubernetes
+- OCI CLI: https://github.com/oracle/oci-cli
+- jq: https://github.com/jqlang/jq
+- nginx-unprivileged container image used by the optional Gateway API example:
+  https://github.com/nginxinc/docker-nginx-unprivileged
+
+Keep this inventory and CILIUM_LICENSE.txt with every distributed copy of the
+sample. Do not remove required upstream attribution when updating a dependency.

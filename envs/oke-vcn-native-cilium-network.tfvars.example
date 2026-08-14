@@ -1,0 +1,56 @@
+# Copyright (c) 2026, Oracle and/or its affiliates. All rights reserved.
+# Author: Ulaganathan N
+#
+# Optional disposable network for reproducing the blog from an empty compartment.
+# Copy this file to oke-vcn-native-cilium-network.tfvars and set the required values.
+# The VCN and subnet names must match the names in the OKE sample tfvars.
+
+region         = "us-phoenix-1"
+compartment_id = null
+
+# Optional direct API-key authentication. Leave these null to use the OCI CLI
+# profile configured on the workstation or automation runner.
+tenancy_ocid       = null
+user_ocid          = null
+fingerprint        = null
+private_key_path   = null
+oci_config_profile = null
+oci_auth           = null
+
+vcn_name      = "oke-cilium-blog-vcn"
+vcn_cidr      = "10.61.0.0/16"
+vcn_dns_label = "okecblog"
+
+# Add only approved sources that need temporary direct access to TCP/6443.
+# The OKE stack creates and attaches the final role-specific security lists.
+api_endpoint_source_cidrs = []
+
+subnets = {
+  oke-cilium-blog-endpoint-subnet = {
+    cidr_block = "10.61.0.0/28"
+    dns_label  = "endpoint"
+    private    = false
+    route_type = "public"
+  }
+
+  oke-cilium-blog-worker-subnet = {
+    cidr_block = "10.61.4.0/22"
+    dns_label  = "worker"
+    private    = true
+    route_type = "private"
+  }
+
+  oke-cilium-blog-pod-subnet = {
+    cidr_block = "10.61.8.0/22"
+    dns_label  = "pod"
+    private    = true
+    route_type = "private"
+  }
+
+  oke-cilium-blog-lb-subnet = {
+    cidr_block = "10.61.12.0/24"
+    dns_label  = "lb"
+    private    = false
+    route_type = "public"
+  }
+}
