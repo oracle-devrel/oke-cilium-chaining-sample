@@ -26,11 +26,15 @@ It contains only the generic files needed for the article:
 
 Existing-network mode creates only the OKE and Cilium resources in the referenced VCN. Optional disposable-network mode creates a minimal reference VCN, subnets, and gateway routes for reproducing the blog from an empty compartment. Private subnets route regional Oracle Services Network traffic through the Service Gateway and other outbound traffic through the NAT Gateway. It is not a production landing-zone design. For the required OCI network design, see:
 
+## Documentation
+
+This README is the operational guide for deploying, validating, and removing the sample. The following Oracle documentation provides the supporting OKE networking and cluster-access requirements:
+
 - [Network Resource Configuration for Cluster Creation and Deployment](https://docs.oracle.com/en-us/iaas/Content/ContEng/Concepts/contengnetworkconfig.htm)
 - [Creating an Enhanced Cluster](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengcreatingenhancedclusters.htm)
 - [Using the OCI VCN-Native Pod Networking CNI plugin](https://docs.oracle.com/en-us/iaas/Content/ContEng/Concepts/contengpodnetworking_topic-OCI_CNI_plugin.htm)
 
-## Get the sample
+## Installation
 
 Clone the repository and run all subsequent commands from its root directory:
 
@@ -237,7 +241,9 @@ CILIUM_NS=kube-system \
   scripts/cilium-install-verify.sh oke_cilium_chaining --verify-only
 ```
 
-## Optional Gateway API extension
+## Examples
+
+### Optional Gateway API extension
 
 Use `examples/gateway-api` only after the baseline OCI CNI and Cilium chaining model is healthy. Cilium Gateway API requires kube-proxy replacement and must be validated separately from the conservative baseline. The extension README identifies the required Gateway API CRDs and Terraform-managed Cilium settings.
 
@@ -304,6 +310,10 @@ generated/detach-security-lists.sh
 terraform -chdir=stacks/01-oke destroy \
   -var-file=../../envs/oke-vcn-native-cilium-chaining.tfvars
 ```
+
+## Help
+
+Start with the timestamped log under `validation-results/` and the final PASS or FAIL summary. Rerun `scripts/cilium-install-verify.sh <context> --verify-only` to isolate post-installation failures, or invoke an individual validation script for a focused connectivity, Service, Hubble, or policy check. When opening a repository issue, include the failing stage, tool versions, and a redacted log excerpt; never include credentials, tenancy identifiers, or private network details. Report suspected security vulnerabilities through the process in [SECURITY.md](SECURITY.md).
 
 ## Contributing
 
