@@ -1,57 +1,48 @@
-*Detailed instructions on how to contribute to the project, if applicable. Must include section about Oracle Contributor Agreement with link and instructions*
+<!-- Copyright (c) 2026, Oracle and/or its affiliates. All rights reserved. -->
+<!-- Author: Ulaganathan N -->
 
 # Contributing to this repository
 
-We welcome your contributions! There are multiple ways to contribute.
+We welcome contributions to improve this sample.
 
 ## Opening issues
 
-For bugs or enhancement requests, please file a GitHub issue unless it's
-security related. When filing a bug remember that the better written the bug is,
-the more likely it is to be fixed. If you think you've found a security
-vulnerability, do not raise a GitHub issue and follow the instructions in our
-[security policy](./SECURITY.md).
+For bugs or enhancement requests, open an issue and include the environment,
+the command that was run, the expected result, and the observed result. Do not
+open a public issue for a suspected security vulnerability. Follow the
+instructions in [SECURITY.md](SECURITY.md) instead.
 
 ## Contributing code
 
-We welcome your code contributions. Before submitting code via a pull request,
-you will need to have signed the [Oracle Contributor Agreement][OCA] (OCA) and
-your commits need to include the following line using the name and e-mail
-address you used to sign the OCA:
+Before submitting code through a pull request, you must sign the
+[Oracle Contributor Agreement][OCA]. Commits must include a `Signed-off-by`
+line containing the name and email address used to sign the OCA. Add the line
+automatically from your configured Git identity by committing with `--signoff`
+or `-s`:
 
-```text
-Signed-off-by: Your Name <you@example.org>
-```
-
-This can be automatically added to pull requests by committing with `--sign-off`
-or `-s`, e.g.
-
-```text
+```bash
 git commit --signoff
 ```
 
-Only pull requests from committers that can be verified as having signed the OCA
-can be accepted.
+Only contributions from committers who can be verified as having signed the
+OCA can be accepted.
 
 ## Pull request process
 
-1. Ensure there is an issue created to track and discuss the fix or enhancement
-   you intend to submit.
-1. Fork this repository.
-1. Create a branch in your fork to implement the changes. We recommend using
-   the issue number as part of your branch name, e.g. `1234-fixes`.
-1. Ensure that any documentation is updated with the changes that are required
-   by your change.
-1. Ensure that any samples are updated if the base image has been changed.
-1. Submit the pull request. *Do not leave the pull request blank*. Explain exactly
-   what your changes are meant to do and provide simple steps on how to validate.
-   your changes. Ensure that you reference the issue you created as well.
-1. We will assign the pull request to 2-3 people for review before it is merged.
+1. Open an issue to describe and discuss the intended change.
+2. Fork the repository and create a focused branch for the issue.
+3. Keep the Terraform, shell scripts, documentation, and examples consistent.
+4. Run `terraform fmt -check -recursive` and `bash -n scripts/*.sh`.
+5. For behavioral changes, include validation evidence from the relevant
+   deployment or smoke-test workflow without including credentials or secrets.
+6. Submit a pull request that references the issue and explains how reviewers
+   can reproduce the result.
+7. Obtain the required OSSA Lite buddy review before merging.
 
 ## Code of conduct
 
-Follow the [Golden Rule](https://en.wikipedia.org/wiki/Golden_Rule). If you'd
-like more specific guidelines, see the [Contributor Covenant Code of Conduct][COC].
+Follow the [Golden Rule](https://en.wikipedia.org/wiki/Golden_Rule). For more
+specific guidance, see the [Contributor Covenant Code of Conduct][COC].
 
 [OCA]: https://oca.opensource.oracle.com
 [COC]: https://www.contributor-covenant.org/version/1/4/code-of-conduct/

@@ -1,0 +1,139 @@
+# Copyright (c) 2026, Oracle and/or its affiliates. All rights reserved.
+# Author: Ulaganathan N
+#
+# Generic sample values for the OKE VCN-native CNI + Cilium chaining blog.
+# Copy this file to oke-vcn-native-cilium-chaining.tfvars and set the required values.
+
+region = "us-phoenix-1"
+
+# Required only when resolving compartment_name. The disposable-network path
+# uses compartment_id, so tenancy_id can stay null.
+tenancy_id = null
+
+# Optional direct API-key authentication. Leave these null to use the OCI CLI
+# profile configured on the workstation or automation runner.
+tenancy_ocid     = null
+user_ocid        = null
+fingerprint      = null
+private_key_path = null
+
+oci_config_profile = null
+oci_auth           = null
+
+clusters = {
+  oke_cilium_chaining = {
+    mode               = "vcn_native_cilium_chaining"
+    compartment_id     = null
+    compartment_name   = null
+    vcn_id             = null
+    vcn_name           = "oke-cilium-blog-vcn"
+    kubernetes_version = "v1.35.2"
+
+    network = {
+      endpoint_subnet_id   = null
+      endpoint_subnet_name = "oke-cilium-blog-endpoint-subnet"
+      worker_subnet_id     = null
+      worker_subnet_name   = "oke-cilium-blog-worker-subnet"
+      pod_subnet_id        = null
+      pod_subnet_name      = "oke-cilium-blog-pod-subnet"
+      lb_subnet_id         = null
+      lb_subnet_name       = "oke-cilium-blog-lb-subnet"
+
+      endpoint_nsg_ids     = []
+      endpoint_nsg_names   = []
+      worker_nsg_ids       = []
+      worker_nsg_names     = []
+      pod_nsg_ids          = []
+      pod_nsg_names        = []
+      lb_nsg_ids           = []
+      lb_nsg_names         = []
+      lb_backend_nsg_ids   = []
+      lb_backend_nsg_names = []
+    }
+
+    security_lists = {
+      enabled            = true
+      admin_source_cidrs = []
+      lb_source_cidrs    = []
+      lb_ingress_ports   = [80, 443]
+    }
+
+    cluster = {
+      type                 = "ENHANCED_CLUSTER"
+      cni_type             = "OCI_VCN_IP_NATIVE"
+      pod_cidr             = null
+      service_cidr         = "10.97.0.0/16"
+      public_endpoint      = true
+      image_policy_enabled = false
+    }
+
+    node_pools = {
+      primary = {
+        name                 = "oke-cilium-chaining-np"
+        size                 = 2
+        shape                = "VM.Standard.E5.Flex"
+        ocpus                = 4
+        memory_gb            = 32
+        os_type              = "OL8"
+        os_arch              = "X86_64"
+        allow_gpu_image      = false
+        boot_volume_size_gb  = 100
+        image_id             = null
+        image_name           = null
+        ssh_public_key       = null
+        availability_domains = []
+        fault_domains        = []
+        imds_v1_disabled    = true
+        max_pods_per_node    = 31
+        labels               = {}
+        metadata             = {}
+      }
+    }
+
+    cilium = {
+      enabled                 = true
+      version                 = "1.18.11"
+      install_mode            = "chaining"
+      cluster_id              = 2
+      namespace               = "kube-system"
+      repository              = "https://helm.cilium.io/"
+      ipam_mode               = "delegated-plugin"
+      routing_mode            = "native"
+      tunnel_protocol         = null
+      kube_proxy_replacement  = false
+      chaining_mode           = "generic-veth"
+      chaining_target         = null
+      cni_custom_conf         = true
+      cni_config_map          = "cilium-chaining-config"
+      cni_config_map_key      = "cni-config"
+      cni_exclusive           = false
+      cni_external_routing    = true
+      endpoint_routes_enabled = true
+      extra_config = {
+        "local-router-ipv4" = "169.254.23.1"
+      }
+
+      enable_lb_ipam          = true
+      enable_ipv4_masquerade  = false
+      enable_ipv6_masquerade  = false
+      bpf_masquerade          = false
+      bpf_distributed_lru     = true
+      bpf_map_dynamic_size_ratio = 0.025
+      bpf_lb_map_max          = 65536
+      bpf_policy_map_max      = 16384
+      socket_lb_enabled       = false
+      prometheus_enabled      = true
+      operator_prometheus_enabled = true
+      k8s_network_policy_enabled = true
+      enable_non_default_deny_policies = true
+      l7_proxy_enabled        = true
+      wireguard_enabled       = false
+      hubble_enabled          = true
+      hubble_relay_enabled    = true
+      hubble_ui_enabled       = true
+      hubble_tls_enabled      = false
+      extra_values_yaml       = ""
+      kube_context            = "oke_cilium_chaining"
+    }
+  }
+}
